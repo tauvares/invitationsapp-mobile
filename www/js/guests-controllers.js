@@ -1,7 +1,7 @@
 angular.module('invitationsApp.guests-controllers', [])
 .controller('GuestsController',
-['$scope', '$state', '$stateParams', '$ionicPopup', '$ionicModal', 'guestFactory', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
-function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, guestFactory, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
+['$scope', '$state', '$stateParams', '$ionicPopup', '$ionicModal', 'guestFactory', 'eventGuestsFactory', 'eventFactory', 'hostFactory', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
+function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, guestFactory, eventGuestsFactory, eventFactory, hostFactory, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
 // Create the host modal that we will use later
     $ionicModal.fromTemplateUrl('templates/newGuest.html', {
         scope: $scope
@@ -15,16 +15,35 @@ function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, guestFactory, 
     // Open the host modal
     $scope.upsertGuest = function (guest) {
         $scope.guest = guest;
-        console.log('id :' + $scope.guest.id + ' / event id: ' + $scope.guest.eventId + ' / name: ' + $scope.guest.name);
         $scope.modal.show();
     };
-    guestFactory.query({eventId: $stateParams.id},
+    eventFactory.get({id: $stateParams.id})
+      .$promise.then(
         function (response) {
-            $scope.guests = response;
+          $scope.event = response;
+          console.log($scope.event.name);
+          hostFactory.get({id: $scope.event.hostId})
+            .$promise.then(
+              function (response) {
+                  $scope.host = response;
+                  console.log($scope.host.name);
+                  eventGuestsFactory.query({id: $stateParams.id},
+                      function (response) {
+                          $scope.guests = response;
+                      },
+                      function (response) {
+                          console.log('No guests registered: ' + response.data.error.message + ' ID: ' + $stateParams.id);
+                      });
+              },
+              function (response) {
+                  console.log('No events returned: ' + response.data.error.message + ' ID: ' + $stateParams.id);
+              }
+            );
         },
         function (response) {
-            console.log('No guests registered: ' + response.data.error.message);
-        });
+            console.log('No hosts returned: ' + response.data.error.message + ' ID: ' + $scope.event.hostId);
+        }
+      );
     // Perform the save host action when the user submits the host form
     $scope.saveGuest = function (guest) {
       $ionicPlatform.ready(function () {

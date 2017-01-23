@@ -1,8 +1,8 @@
 angular.module('invitationsApp.hosts-controllers', [])
 .controller('HostsController',
-['$scope', '$state', '$stateParams', '$ionicPopup', '$ionicModal', 'hostFactory', 'baseURL', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
-function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, hostFactory, baseURL, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
-    $scope.baseURL = baseURL;
+['$scope', '$state', '$stateParams', '$ionicPopup', '$ionicModal', 'hostFactory', 'customerHostsFactory', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
+function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, hostFactory, customerHostsFactory, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
+/*
     $scope.tab = 1;
     $scope.select = function (setTab) {
         $scope.tab = setTab;
@@ -19,7 +19,7 @@ function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, hostFactory, b
     $scope.isSelected = function (checkTab) {
         return ($scope.tab === checkTab);
     };
-
+    */
 // Create the host modal that we will use later
     $ionicModal.fromTemplateUrl('templates/newHost.html', {
         scope: $scope
@@ -33,15 +33,15 @@ function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, hostFactory, b
     // Open the host modal
     $scope.upsertHost = function (host) {
         $scope.host = host;
-        console.log('id :' + $scope.host.id + ' / customer id: ' + $scope.host.customerId + ' / name: ' + $scope.host.name);
         $scope.modal.show();
     };
-    hostFactory.query({customerId: $stateParams.id},
-        function (response) {
-            $scope.hosts = response;
+    customerHostsFactory.query({id: $stateParams.id})
+      .$promise.then(
+        function(response) {
+          $scope.hosts = response;
         },
-        function (response) {
-            console.log('No hosts registered: ' + response.data.error.message);
+        function(response){
+          console.log('No hosts registered: ' + response.data.error.message);
         });
     // Perform the save host action when the user submits the host form
     $scope.saveHost = function (host) {
@@ -97,7 +97,7 @@ function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, hostFactory, b
                   $cordovaToast
                       .show('Host not saved ' , 'long', 'center')
                       .then(function (success) {
-                          console.log('Host not Saved ' + response.data.error.message + ' id: ' + $stateParams.id);
+                          console.log('Host not Saved ' + response.data.error.message + ' id: ' + $stateParams.id + 'Customer ID' + host.customerId);
                       }, function (error) {
                           // error
                       });

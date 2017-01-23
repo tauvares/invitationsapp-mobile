@@ -2,7 +2,7 @@ angular.module('invitationsApp.customers-controllers', [])
 .controller('CustomersController',
 ['$scope', '$state', '$stateParams', '$http', '$ionicPopup', '$ionicModal', 'customerFactory', 'baseURL', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
 function ($scope, $state, $http, $stateParams, $ionicPopup, $ionicModal, customerFactory, baseURL, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
-    $scope.baseURL = baseURL;
+    //$scope.baseURL = baseURL;
 
 // Create the host modal that we will use later
     $ionicModal.fromTemplateUrl('templates/updateCustomer.html', {

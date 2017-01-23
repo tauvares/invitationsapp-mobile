@@ -8,6 +8,13 @@ angular.module('invitationsApp.services', ['ngResource'])
         }
     });
 }])
+.factory('customerHostsFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+    return $resource(baseURL + "Customers/:id/Hosts", null, {
+        'update': {
+            method: 'PUT'
+        }
+    });
+}])
 .factory('hostFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
     return $resource(baseURL + "Hosts/:id", null, {
         'update': {
@@ -15,8 +22,22 @@ angular.module('invitationsApp.services', ['ngResource'])
         }
     });
 }])
+.factory('hostEventsFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+    return $resource(baseURL + "Hosts/:id/events", null, {
+        'update': {
+            method: 'PUT'
+        }
+    });
+}])
 .factory('eventFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
     return $resource(baseURL + "Events/:id", null, {
+        'update': {
+            method: 'PUT'
+        }
+    });
+}])
+.factory('eventGuestsFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+    return $resource(baseURL + "Events/:id/guests", null, {
         'update': {
             method: 'PUT'
         }

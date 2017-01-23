@@ -1,11 +1,11 @@
-<ion-view view-title="{{username}}'s Events">
+<ion-view view-title="{{host.name}}'s Events">
    <div class="tabs-striped tabs-color-assertive">
     <ul class="tabs">
         <li class="tab-item">
             <a menu-close href="#/app" class="assertive">Home</a>
         </li>
         <li class="tab-item">
-            <a menu-close class="assertive">{{username}}'s Hosts</a>
+            <a menu-close class="assertive" ui-sref="app.hosts({id: userid})">{{username}}'s Hosts</a>
         </li>
     </ul>
   </div>
@@ -21,13 +21,13 @@
           <img src="{{event.photo}}">
           Start Date: {{event.startDate}}<br>
           End Date: {{event.endDate}}<br>
-          Confirmation Deadline Date: {{event.confirmationDeadlineDate}}<br>
+          Confirmation Until: {{event.confirmationDeadlineDate}}<br>
           Photo: {{event.photo}}<br>
           Description: {{event.description}}<br>
         </div>
         <div class="button-bar">
             <a class="button button-dark icon ion-android-calendar" ui-sref="app.guests({id: event.id})"> Guests</a>
-            <button class="button button-light icon ion-android-create" ng-click="upsertGuet(event)"> Edit</button>
+            <button class="button button-light icon ion-android-create" ng-click="upsertEvent(event)"> Edit</button>
             <button class="button button-assertive icon ion-minus-circled" ng-click="deleteEvent(event.id)"> Delete</button>
         </div>
     </div>

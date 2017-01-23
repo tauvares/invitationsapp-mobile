@@ -1,7 +1,7 @@
 angular.module('invitationsApp.events-controllers', [])
 .controller('EventsController',
-['$scope', '$state', '$stateParams', '$ionicPopup', '$ionicModal', 'eventFactory', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
-function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, eventFactory, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
+['$scope', '$state', '$stateParams', '$ionicPopup', '$ionicModal', 'eventFactory', 'hostEventsFactory', 'hostFactory', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast',
+function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, eventFactory, hostEventsFactory, hostFactory, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
 // Create the host modal that we will use later
     $ionicModal.fromTemplateUrl('templates/newEvent.html', {
         scope: $scope
@@ -15,16 +15,25 @@ function ($scope, $state, $stateParams, $ionicPopup, $ionicModal, eventFactory, 
     // Open the host modal
     $scope.upsertEvent = function (event) {
         $scope.event = event;
-        console.log('id :' + $scope.event.id + ' / host id: ' + $scope.event.hostId + ' / name: ' + $scope.event.name);
         $scope.modal.show();
     };
-    eventFactory.query({hostId: $stateParams.id},
+    hostFactory.get({id: $stateParams.id})
+      .$promise.then(
         function (response) {
-            $scope.events = response;
+            $scope.host = response;
+            console.log($scope.host.name);
+            hostEventsFactory.query({id: $stateParams.id},
+                function (response) {
+                    $scope.events = response;
+                },
+                function (response) {
+                    console.log('No events registered: ' + response.data.error.message + ' ID: ' + $stateParams.id);
+                });
         },
         function (response) {
-            console.log('No events registered: ' + response.data.error.message);
-        });
+            console.log('No hosts returned: ' + response.data.error.message + ' ID: ' + $stateParams.id);
+        }
+      );
     // Perform the save host action when the user submits the host form
     $scope.saveEvent = function (event) {
       $ionicPlatform.ready(function () {

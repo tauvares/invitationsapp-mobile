@@ -5,10 +5,10 @@
             <a menu-close href="#/app" class="assertive">Home</a>
         </li>
         <li class="tab-item">
-            <a menu-close class="assertive">{{username}}'s Hosts</a>
+            <a menu-close class="assertive" ui-sref="app.hosts({id: userid})">{{username}}'s Hosts</a>
         </li>
         <li class="tab-item">
-            <a menu-close class="assertive">{{host.name}}'s Events</a>
+            <a menu-close class="assertive" ui-sref="app.events({id: host.id})">{{host.name}}'s Events</a>
         </li>
     </ul>
   </div>
@@ -21,7 +21,7 @@
             <h2>Name: {{guest.name}}</h2>
         </div>
         <div class="item item-text-wrap item-thumbnail-left">
-          <img src="{{event.photo}}">
+          <img src="{{guest.photo}}">
           E-mail: {{guest.email}}<br>
           Phone: {{guest.phone}}<br>
           Status: {{guest.status}}<br>
