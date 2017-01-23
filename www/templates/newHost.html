@@ -1,0 +1,41 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Create/Update/Delete Host</h1>
+    <div class="buttons">
+      <button class="button button-assertive" ng-click="closeHostForm()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form id="hostForm" name="hostForm" ng-submit="saveHost(host)">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="host.name">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">E-mail</span>
+          <input type="text" ng-model="host.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Phone</span>
+          <input type="tel" ng-model="host.phone">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Photo</span>
+          <input type="text" ng-model="host.photo">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Contact Name</span>
+          <input type="text" ng-model="host.contactName">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Contact Title</span>
+          <input type="text" ng-model="host.contactTitle">
+        </label>
+        <label class="item">
+          <button class="button button-block button-assertive" type="submit">Save</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

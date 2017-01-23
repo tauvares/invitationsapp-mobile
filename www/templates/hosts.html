@@ -1,0 +1,31 @@
+<ion-view view-title="{{username}}'s Hosts">
+   <div class="tabs-striped tabs-color-assertive">
+    <ul class="tabs">
+        <li class="tab-item">
+            <a menu-close href="#/app" class="assertive">Home</a>
+        </li>
+    </ul>
+  </div>
+  <ion-content>
+    <label class="item">
+      <button class="button button-block button-assertive" ng-click="upsertHost(host)">Create new Host</button>
+    </label>
+    <div class="card" ng-repeat="host in hosts">
+        <div class="item item-divider">
+            <h2>Name: {{host.name}}</h2>
+        </div>
+        <div class="item item-text-wrap item-thumbnail-left">
+          <img src="{{host.photo}}">
+          E-mail: {{host.email}}<br>
+          Phone: {{host.phone}}<br>
+          Contact Name: {{host.contactName}}<br>
+          Contact Title: {{host.contactTitle}}<br>
+        </div>
+        <div class="button-bar">
+            <a class="button button-dark icon ion-android-calendar" ui-sref="app.events({id: host.id})"> Events</a>
+            <button class="button button-light icon ion-android-create" ng-click="upsertHost(host)"> Edit</button>
+            <button class="button button-assertive icon ion-minus-circled" ng-click="deleteHost(host.id)"> Delete</button>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

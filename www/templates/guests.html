@@ -1,0 +1,37 @@
+<ion-view view-title="{{event.name}}'s Guests">
+   <div class="tabs-striped tabs-color-assertive">
+    <ul class="tabs">
+        <li class="tab-item">
+            <a menu-close href="#/app" class="assertive">Home</a>
+        </li>
+        <li class="tab-item">
+            <a menu-close class="assertive">{{username}}'s Hosts</a>
+        </li>
+        <li class="tab-item">
+            <a menu-close class="assertive">{{host.name}}'s Events</a>
+        </li>
+    </ul>
+  </div>
+  <ion-content>
+    <label class="item">
+      <button class="button button-block button-assertive" ng-click="upsertGuest(guest)">Create new Guest</button>
+    </label>
+    <div class="card" ng-repeat="guest in guests">
+        <div class="item item-divider">
+            <h2>Name: {{guest.name}}</h2>
+        </div>
+        <div class="item item-text-wrap item-thumbnail-left">
+          <img src="{{event.photo}}">
+          E-mail: {{guest.email}}<br>
+          Phone: {{guest.phone}}<br>
+          Status: {{guest.status}}<br>
+          Invitations Confirmed: {{guest.invitationsConfirmed}}
+        </div>
+        <div class="button-bar">
+            <a class="button button-dark icon ion-android-calendar" ui-sref="app.guests({id: guest.id})"> Send E-mail</a>
+            <button class="button button-light icon ion-android-create" ng-click="upsertGuest(guest)"> Edit</button>
+            <button class="button button-assertive icon ion-minus-circled" ng-click="deleteGuest(guest.id)"> Delete</button>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

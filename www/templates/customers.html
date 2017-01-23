@@ -1,0 +1,20 @@
+<ion-view view-title="{{username}}'s settings">
+  <ion-content>
+    <div class="card" ng-repeat="customer in customers">
+        <div class="item item-divider">
+            <h2>User Name: {{customer.username}}</h2>
+        </div>
+        <div class="item item-text-wrap item-thumbnail-left">
+          <img src="{{customer.photo}}">
+          E-mail: {{customer.email}}<br>
+          First Name: {{customer.firstName}}<br>
+          Last Name: {{customer.lastName}}<br>
+          Photo: {{customer.photo}}<br>
+        </div>
+        <div class="button-bar">
+            <button class="button button-light icon ion-android-create" ng-click="upsertCustomer(customer)"> Edit</button>
+            <button class="button button-assertive icon ion-minus-circled" ng-click="deleteCustomer(customer.id)"> Delete</button>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>
