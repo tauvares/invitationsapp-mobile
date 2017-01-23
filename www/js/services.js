@@ -1,6 +1,6 @@
 'use strict';
 angular.module('invitationsApp.services', ['ngResource'])
-.constant("baseURL", "https://invitationsapp.herokuapp.com/api/")
+.constant("baseURL", "<YOUR_API_LOCATION:PORT>")
 .factory('customerFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
     return $resource(baseURL + "Customers/:id", null, {
         'update': {
